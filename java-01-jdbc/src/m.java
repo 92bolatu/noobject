@@ -1,4 +1,5 @@
 
+import java.io.*;
 import java.sql.*;
 import java.util.Date;
 import java.util.UUID;
@@ -7,14 +8,42 @@ import java.util.UUID;
  * Created by cassandra on 15/7/21.
  */
 public class m {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
+
         System.out.println(new Date());
+        //read config file
+        String file  = System.getProperty("user.dir")+"/config.ini";
+        String line = null;
+        //String.valueOf(m.class.getResource(""));
+        System.out.println(file);
+        try {
+            BufferedReader readerconfig = new BufferedReader(new FileReader(file));
+            line  = readerconfig.readLine();
+            System.out.println(line);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        //read user input
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        System.out.print("Username:");
+        String username="";
+        try {
+            username = reader.readLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.print("Password:");
+        String password="";
+        try {
+            password = reader.readLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         //config
-        String connstr = "jdbc:mysql://127.0.0.1/mysql";
+        //String connstr = "jdbc:mysql://127.0.0.1/mysql";
         String driver = "org.mariadb.jdbc.Driver";
-        String user = "root";
-        String password = "123456";
         Connection connection = null;
 
         //init jar driver
@@ -25,7 +54,7 @@ public class m {
         }
 
         try {
-            connection = DriverManager.getConnection(connstr, user, password);
+            connection = DriverManager.getConnection(line, username, password);
         } catch (SQLException e) {
             e.printStackTrace();
         }
