@@ -13,13 +13,12 @@ public class m {
         System.out.println(new Date());
         //read config file
         String file  = System.getProperty("user.dir")+"/config.ini";
-        String line = null;
-        //String.valueOf(m.class.getResource(""));
+        String dburl = null;
         System.out.println(file);
         try {
             BufferedReader readerconfig = new BufferedReader(new FileReader(file));
-            line  = readerconfig.readLine();
-            System.out.println(line);
+            dburl  = readerconfig.readLine();
+            System.out.println(dburl);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -41,8 +40,7 @@ public class m {
             e.printStackTrace();
         }
 
-        //config
-        //String connstr = "jdbc:mysql://127.0.0.1/mysql";
+
         String driver = "org.mariadb.jdbc.Driver";
         Connection connection = null;
 
@@ -54,7 +52,7 @@ public class m {
         }
 
         try {
-            connection = DriverManager.getConnection(line, username, password);
+            connection = DriverManager.getConnection(dburl, username, password);
         } catch (SQLException e) {
             e.printStackTrace();
         }
